@@ -27,14 +27,14 @@
 #include "pins_RAMPS_14.h"
 
 #undef FAN_PIN
-#define FAN_PIN             6 //Part Cooling System
+#define FAN_PIN             5 //Part Cooling System
 #define BEEPER_PIN         33
-#define CONTROLLERFAN_PIN   4 //Pin used for the fan to cool motherboard (-1 to disable)
+#define CONTROLLERFAN_PIN   -1 //Pin used for the fan to cool motherboard (-1 to disable)
 //Fans/Water Pump to cool the hotend cool side.
-#define EXTRUDER_0_AUTO_FAN_PIN   5
-#define EXTRUDER_1_AUTO_FAN_PIN   5
-#define EXTRUDER_2_AUTO_FAN_PIN   5
-#define EXTRUDER_3_AUTO_FAN_PIN   5
+#define EXTRUDER_0_AUTO_FAN_PIN   17
+#define EXTRUDER_1_AUTO_FAN_PIN   4
+#define EXTRUDER_2_AUTO_FAN_PIN   -1
+#define EXTRUDER_3_AUTO_FAN_PIN   -1
 //
 //This section is to swap the MIN and MAX pins because the X3 Pro comes with only
 //MIN endstops soldered onto the board. Delta code wants the homing endstops to be
@@ -63,17 +63,21 @@
   #define Z_MIN_PROBE_PIN  19
 #endif
 //
-#define E2_STEP_PIN        23
-#define E2_DIR_PIN         25
-#define E2_ENABLE_PIN      40
+//#define E2_STEP_PIN        23
+//#define E2_DIR_PIN         25
+//#define E2_ENABLE_PIN      40
 
-#define E3_STEP_PIN        27
-#define E3_DIR_PIN         29
-#define E3_ENABLE_PIN      41
+//#define E3_STEP_PIN        27
+//#define E3_DIR_PIN         29
+//#define E3_ENABLE_PIN      41
 
-#define E4_STEP_PIN        43
-#define E4_DIR_PIN         37
-#define E4_ENABLE_PIN      42
+//#define E4_STEP_PIN        43
+//#define E4_DIR_PIN         37
+//#define E4_ENABLE_PIN      42
+
+#define Y2_STEP_PIN         23
+#define Y2_DIR_PIN          25
+#define Y2_ENABLE_PIN       40
 
 #undef HEATER_1_PIN
 #undef HEATER_2_PIN

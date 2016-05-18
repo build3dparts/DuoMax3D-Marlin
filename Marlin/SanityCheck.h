@@ -135,7 +135,7 @@
   #endif
 
   #if ENABLED(Y_DUAL_STEPPER_DRIVERS)
-    #error EXTRUDERS must be 1 with Y_DUAL_STEPPER_DRIVERS.
+    //#error EXTRUDERS must be 1 with Y_DUAL_STEPPER_DRIVERS.
   #endif
 
   #if ENABLED(Z_DUAL_STEPPER_DRIVERS)
