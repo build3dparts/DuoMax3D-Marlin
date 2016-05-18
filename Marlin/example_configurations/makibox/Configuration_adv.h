@@ -80,13 +80,23 @@
 #endif
 
 /**
- * Thermal Protection parameters for the bed
- * are like the above for the hotends.
- * WATCH_TEMP_BED_PERIOD and WATCH_TEMP_BED_INCREASE are not imlemented now.
+ * Thermal Protection parameters for the bed are just as above for hotends.
  */
 #if ENABLED(THERMAL_PROTECTION_BED)
   #define THERMAL_PROTECTION_BED_PERIOD 20    // Seconds
   #define THERMAL_PROTECTION_BED_HYSTERESIS 2 // Degrees Celsius
+
+  /**
+   * Whenever an M140 or M190 increases the target temperature the firmware will wait for the
+   * WATCH_BED_TEMP_PERIOD to expire, and if the temperature hasn't increased by WATCH_BED_TEMP_INCREASE
+   * degrees, the machine is halted, requiring a hard reset. This test restarts with any M140/M190,
+   * but only if the current temperature is far enough below the target for a reliable test.
+   *
+   * If you get too many "Heating failed" errors, increase WATCH_BED_TEMP_PERIOD and/or decrease
+   * WATCH_BED_TEMP_INCREASE. (WATCH_BED_TEMP_INCREASE should not be below 2.)
+   */
+  #define WATCH_BED_TEMP_PERIOD 60                // Seconds
+  #define WATCH_BED_TEMP_INCREASE 2               // Degrees Celsius
 #endif
 
 #if ENABLED(PIDTEMP)
@@ -274,8 +284,6 @@
 
 #define AXIS_RELATIVE_MODES {false, false, false, false}
 
-// @section machine
-
 //By default pololu step drivers require an active high signal. However, some high power drivers require an active low signal as step.
 #define INVERT_X_STEP_PIN false
 #define INVERT_Y_STEP_PIN false
@@ -445,8 +453,12 @@
 // @section extras
 
 // Arc interpretation settings:
+#define ARC_SUPPORT  // Disabling this saves ~2660bytes
 #define MM_PER_ARC_SEGMENT 1
 #define N_ARC_CORRECTION 25
+
+// Support for G5 with XYZE destination and IJPQ offsets
+//#define BEZIER_CURVE_SUPPORT
 
 const unsigned int dropsegments = 5; //everything with less than this number of steps will be ignored as move and joined with the next movement
 
