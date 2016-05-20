@@ -229,6 +229,7 @@
 // prevents hot-end ooze contaminating the print. It also reduces the weight of each x-carriage
 // allowing faster printing speeds.
 #define DUAL_X_CARRIAGE
+
 #if ENABLED(DUAL_X_CARRIAGE)
   // Configuration for second X-carriage
   // Note: the first x-carriage is defined as the x-carriage which homes to the minimum endstop;
@@ -242,12 +243,12 @@
       // without modifying the firmware (through the "M218 T1 X???" command).
       // Remember: you should set the second extruder x-offset to 0 in your slicer.
 
-  // Pins for second x-carriage stepper driver (defined here to avoid further complicating pins.h)
+// Pins for second x-carriage stepper driver (defined here to avoid further complicating pins.h)
 #define X2_STEP_PIN 27
 #define X2_DIR_PIN 29
 #define X2_ENABLE_PIN 41
 
-  // There are a few selectable movement modes for dual x-carriages using M605 S<mode>
+// There are a few selectable movement modes for dual x-carriages using M605 S<mode>
   //    Mode 0: Full control. The slicer has full control over both x-carriages and can achieve optimal travel results
   //                           as long as it supports dual x-carriages. (M605 S0)
   //    Mode 1: Auto-park mode. The firmware will automatically park and unpark the x-carriages on tool changes so
@@ -453,11 +454,11 @@
 // @section extras
 
 // Arc interpretation settings:
-#define ARC_SUPPORT  // Disabling this saves ~2660bytes
+#define ARC_SUPPORT  // Disabling this saves ~2738 bytes
 #define MM_PER_ARC_SEGMENT 1
 #define N_ARC_CORRECTION 25
 
-// Support for G5 with XYZE destination and IJPQ offsets
+// Support for G5 with XYZE destination and IJPQ offsets. Requires ~2666 bytes.
 //#define BEZIER_CURVE_SUPPORT
 
 const unsigned int dropsegments = 5; //everything with less than this number of steps will be ignored as move and joined with the next movement
