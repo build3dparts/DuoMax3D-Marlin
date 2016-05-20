@@ -29,7 +29,6 @@
 #define FAN_PIN             6 //Part Cooling System
 
 #undef BEEPER_PIN
->>>>>>> MarlinFirmware/RCBugFix
 #define BEEPER_PIN         33
 #define CONTROLLERFAN_PIN   -1 //Pin used for the fan to cool motherboard (-1 to disable)
 //Fans/Water Pump to cool the hotend cool side.
