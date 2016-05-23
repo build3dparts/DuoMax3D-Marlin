@@ -26,7 +26,8 @@
 
 #include "pins_RAMPS_14.h"
 
-#define FAN_PIN             6 //Part Cooling System
+#undef FAN_PIN
+#define FAN_PIN             5 //Part Cooling System
 
 #undef BEEPER_PIN
 #define BEEPER_PIN         33
@@ -81,9 +82,11 @@
 #define Y2_DIR_PIN          25
 #define Y2_ENABLE_PIN       40
 
+#undef HEATER_0_PIN
 #undef HEATER_1_PIN
 #undef HEATER_2_PIN
 #undef HEATER_3_PIN
+#define HEATER_0_PIN       10
 #define HEATER_1_PIN        9
 #define HEATER_2_PIN       16
 #define HEATER_3_PIN       17
@@ -92,8 +95,12 @@
 #define HEATER_6_PIN        6
 #define HEATER_7_PIN       11
 
+#undef TEMP_0_PIN
+#undef TEMP_1_PIN
 #undef TEMP_2_PIN
 #undef TEMP_3_PIN
+#define TEMP_0_PIN         13   // ANALOG NUMBERING
+#define TEMP_1_PIN         15   // ANALOG NUMBERING
 #define TEMP_2_PIN         12   // ANALOG NUMBERING
 #define TEMP_3_PIN         11   // ANALOG NUMBERING
 #define TEMP_4_PIN         10   // ANALOG NUMBERING
