@@ -362,11 +362,10 @@
 
 // @section machine
 
-// Uncomment this option to enable CoreXY kinematics
+// Uncomment one of these options to enable CoreXY, CoreXZ, or CoreYZ kinematics
 //#define COREXY
-
-// Uncomment this option to enable CoreXZ kinematics
 //#define COREXZ
+//#define COREYZ
 
 // Enable this option for Toshiba steppers
 //#define CONFIG_STEPPERS_TOSHIBA
@@ -537,10 +536,7 @@ const bool Z_MIN_PROBE_ENDSTOP_INVERTING = false; // set to true to invert the l
 //#define MESH_BED_LEVELING    // Enable mesh bed leveling.
 
 #if ENABLED(MESH_BED_LEVELING)
-  #define MESH_MIN_X 10
-  #define MESH_MAX_X (X_MAX_POS - (MESH_MIN_X))
-  #define MESH_MIN_Y 10
-  #define MESH_MAX_Y (Y_MAX_POS - (MESH_MIN_Y))
+  #define MESH_INSET 10        // Mesh inset margin on print area
   #define MESH_NUM_X_POINTS 3  // Don't use more than 7 points per axis, implementation limited.
   #define MESH_NUM_Y_POINTS 3
   #define MESH_HOME_SEARCH_Z 4  // Z after Home, bed somewhere below but above 0.0.
@@ -1083,6 +1079,13 @@ const bool Z_MIN_PROBE_ENDSTOP_INVERTING = false; // set to true to invert the l
 // SSD1306 OLED full graphics generic display
 //
 //#define U8GLIB_SSD1306
+
+// SAV OLEd LCD module support using either SSD1306 or SH1106 based LCD modules
+//#define SAV_3DGLCD
+#if ENABLED(SAV_3DGLCD)
+  //#define U8GLIB_SSD1306
+  #define U8GLIB_SH1106
+#endif
 
 //
 // CONTROLLER TYPE: Shift register panels

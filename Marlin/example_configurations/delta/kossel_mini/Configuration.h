@@ -345,11 +345,10 @@
 
 // @section machine
 
-// Uncomment this option to enable CoreXY kinematics
+// Uncomment one of these options to enable CoreXY, CoreXZ, or CoreYZ kinematics
 //#define COREXY
-
-// Uncomment this option to enable CoreXZ kinematics
 //#define COREXZ
+//#define COREYZ
 
 //===========================================================================
 //============================== Delta Settings =============================
@@ -562,10 +561,7 @@ const bool Z_MIN_PROBE_ENDSTOP_INVERTING = false; // set to true to invert the l
 //#define MESH_BED_LEVELING    // Enable mesh bed leveling.
 
 #if ENABLED(MESH_BED_LEVELING)
-  #define MESH_MIN_X 10
-  #define MESH_MAX_X (X_MAX_POS - (MESH_MIN_X))
-  #define MESH_MIN_Y 10
-  #define MESH_MAX_Y (Y_MAX_POS - (MESH_MIN_Y))
+  #define MESH_INSET 10        // Mesh inset margin on print area
   #define MESH_NUM_X_POINTS 3  // Don't use more than 7 points per axis, implementation limited.
   #define MESH_NUM_Y_POINTS 3
   #define MESH_HOME_SEARCH_Z 4  // Z after Home, bed somewhere below but above 0.0.
@@ -695,33 +691,12 @@ const bool Z_MIN_PROBE_ENDSTOP_INVERTING = false; // set to true to invert the l
     // 2 or 3 sets of coordinates for deploying and retracting the spring loaded touch probe on G29,
     // if servo actuated touch probe is not defined. Uncomment as appropriate for your printer/probe.
 
-    //#define Z_PROBE_ALLEN_KEY_DEPLOY_1_X 30.0
-    //#define Z_PROBE_ALLEN_KEY_DEPLOY_1_Y DELTA_PRINTABLE_RADIUS
-    //#define Z_PROBE_ALLEN_KEY_DEPLOY_1_Z 100.0
-    //#define Z_PROBE_ALLEN_KEY_DEPLOY_1_FEEDRATE HOMING_FEEDRATE_XYZ
-    //#define Z_PROBE_ALLEN_KEY_DEPLOY_2_X 0.0
-    //#define Z_PROBE_ALLEN_KEY_DEPLOY_2_Y DELTA_PRINTABLE_RADIUS
-    //#define Z_PROBE_ALLEN_KEY_DEPLOY_2_Z 100.0
-    //#define Z_PROBE_ALLEN_KEY_DEPLOY_2_FEEDRATE (HOMING_FEEDRATE_XYZ)/10
-
-    //#define Z_PROBE_ALLEN_KEY_STOW_1_X -64.0 // Move the probe into position
-    //#define Z_PROBE_ALLEN_KEY_STOW_1_Y 56.0
-    //#define Z_PROBE_ALLEN_KEY_STOW_1_Z 23.0
-    //#define Z_PROBE_ALLEN_KEY_STOW_1_FEEDRATE HOMING_FEEDRATE_XYZ
-    //#define Z_PROBE_ALLEN_KEY_STOW_2_X -64.0 // Push it down
-    //#define Z_PROBE_ALLEN_KEY_STOW_2_Y 56.0
-    //#define Z_PROBE_ALLEN_KEY_STOW_2_Z 3.0
-    //#define Z_PROBE_ALLEN_KEY_STOW_2_FEEDRATE (HOMING_FEEDRATE_XYZ)/10
-    //#define Z_PROBE_ALLEN_KEY_STOW_3_X -64.0 // Move it up to clear
-    //#define Z_PROBE_ALLEN_KEY_STOW_3_Y 56.0
-    //#define Z_PROBE_ALLEN_KEY_STOW_3_Z 50.0
-    //#define Z_PROBE_ALLEN_KEY_STOW_3_FEEDRATE HOMING_FEEDRATE_XYZ
-
     // Kossel Mini
     #define Z_PROBE_ALLEN_KEY_DEPLOY_1_X 30.0
     #define Z_PROBE_ALLEN_KEY_DEPLOY_1_Y DELTA_PRINTABLE_RADIUS
     #define Z_PROBE_ALLEN_KEY_DEPLOY_1_Z 100.0
     #define Z_PROBE_ALLEN_KEY_DEPLOY_1_FEEDRATE XY_TRAVEL_SPEED
+
     #define Z_PROBE_ALLEN_KEY_DEPLOY_2_X 0.0
     #define Z_PROBE_ALLEN_KEY_DEPLOY_2_Y DELTA_PRINTABLE_RADIUS
     #define Z_PROBE_ALLEN_KEY_DEPLOY_2_Z 100.0
@@ -744,33 +719,7 @@ const bool Z_MIN_PROBE_ENDSTOP_INVERTING = false; // set to true to invert the l
     #define Z_PROBE_ALLEN_KEY_STOW_3_Z  (Z_PROBE_ALLEN_KEY_STOW_1_Z+Z_PROBE_ALLEN_KEY_STOW_DEPTH)
     #define Z_PROBE_ALLEN_KEY_STOW_3_FEEDRATE (XY_TRAVEL_SPEED/2)
 
-    // Kossel Pro
-    //#define Z_PROBE_ALLEN_KEY_DEPLOY_1_X -105.00 // Move left but not quite so far that we'll bump the belt
-    //#define Z_PROBE_ALLEN_KEY_DEPLOY_1_Y 0.00
-    //#define Z_PROBE_ALLEN_KEY_DEPLOY_1_Z 100.0
-    //#define Z_PROBE_ALLEN_KEY_DEPLOY_1_FEEDRATE HOMING_FEEDRATE_XYZ
-    //#define Z_PROBE_ALLEN_KEY_DEPLOY_2_X -110.00 // Move outward to position deploy pin to the left of the arm
-    //#define Z_PROBE_ALLEN_KEY_DEPLOY_2_Y -125.00
-    //#define Z_PROBE_ALLEN_KEY_DEPLOY_2_Z 100.0
-    //#define Z_PROBE_ALLEN_KEY_DEPLOY_2_FEEDRATE HOMING_FEEDRATE_XYZ
-    //#define Z_PROBE_ALLEN_KEY_DEPLOY_3_X 45.00 // Move right to trigger deploy pin
-    //#define Z_PROBE_ALLEN_KEY_DEPLOY_3_Y -125.00
-    //#define Z_PROBE_ALLEN_KEY_DEPLOY_3_Z 100.0
-    //#define Z_PROBE_ALLEN_KEY_DEPLOY_3_FEEDRATE (HOMING_FEEDRATE_XYZ)/2
-
-    //#define Z_PROBE_ALLEN_KEY_STOW_1_X 36.00 // Line up with bed retaining clip
-    //#define Z_PROBE_ALLEN_KEY_STOW_1_Y -122.00
-    //#define Z_PROBE_ALLEN_KEY_STOW_1_Z 75.0
-    //#define Z_PROBE_ALLEN_KEY_STOW_1_FEEDRATE HOMING_FEEDRATE_XYZ
-    //#define Z_PROBE_ALLEN_KEY_STOW_2_X 36.00 // move down to retract probe
-    //#define Z_PROBE_ALLEN_KEY_STOW_2_Y -122.00
-    //#define Z_PROBE_ALLEN_KEY_STOW_2_Z 25.0
-    //#define Z_PROBE_ALLEN_KEY_STOW_2_FEEDRATE (HOMING_FEEDRATE_XYZ)/2
-    //#define Z_PROBE_ALLEN_KEY_STOW_3_X 0.0  // return to 0,0,100
-    //#define Z_PROBE_ALLEN_KEY_STOW_3_Y 0.0
-    //#define Z_PROBE_ALLEN_KEY_STOW_3_Z 100.0
-    //#define Z_PROBE_ALLEN_KEY_STOW_3_FEEDRATE HOMING_FEEDRATE_XYZ
-  #endif
+  #endif // Z_PROBE_ALLEN_KEY
 
   // If you've enabled AUTO_BED_LEVELING_FEATURE and are using the Z Probe for Z Homing,
   // it is highly recommended you also enable Z_SAFE_HOMING below!
@@ -1199,6 +1148,13 @@ const bool Z_MIN_PROBE_ENDSTOP_INVERTING = false; // set to true to invert the l
 // SSD1306 OLED full graphics generic display
 //
 //#define U8GLIB_SSD1306
+
+// SAV OLEd LCD module support using either SSD1306 or SH1106 based LCD modules
+//#define SAV_3DGLCD
+#if ENABLED(SAV_3DGLCD)
+  //#define U8GLIB_SSD1306
+  #define U8GLIB_SH1106
+#endif
 
 //
 // CONTROLLER TYPE: Shift register panels

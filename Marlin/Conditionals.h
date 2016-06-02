@@ -48,11 +48,11 @@
 
   #define LCD_HAS_DIRECTIONAL_BUTTONS (BUTTON_EXISTS(UP) || BUTTON_EXISTS(DWN) || BUTTON_EXISTS(LFT) || BUTTON_EXISTS(RT))
 
-  #if ENABLED(MAKRPANEL)
+  #if ENABLED(MAKRPANEL) || ENABLED(MINIPANEL)
     #define DOGLCD
-    #define DEFAULT_LCD_CONTRAST 17
     #define ULTIPANEL
     #define NEWPANEL
+    #define DEFAULT_LCD_CONTRAST 17
   #endif
 
   #if ENABLED(miniVIKI) || ENABLED(VIKI2) || ENABLED(ELB_FULL_GRAPHIC_CONTROLLER)
@@ -74,13 +74,13 @@
     #define ENCODER_STEPS_PER_MENU_ITEM 1
   #endif
 
-  // Generic support for SSD1306 OLED based LCDs.
-  #if ENABLED(U8GLIB_SSD1306)
+  // Generic support for SSD1306 / SH1106 OLED based LCDs.
+  #if ENABLED(U8GLIB_SSD1306) || ENABLED(U8GLIB_SH1106)
     #define ULTRA_LCD  //general LCD support, also 16x2
-    #define DOGLCD  // Support for I2C LCD 128x64 (Controller SSD1306 graphic Display Family)
+    #define DOGLCD  // Support for I2C LCD 128x64 (Controller SSD1306 / SH1106 graphic Display Family)
   #endif
 
-  #if ENABLED(PANEL_ONE)
+  #if ENABLED(PANEL_ONE) || ENABLED(U8GLIB_SH1106)
     #define ULTIMAKERCONTROLLER
   #endif
 
@@ -121,13 +121,6 @@
     #define LCD_I2C_ADDRESS 0x27   // I2C Address of the port expander
     #define ULTIPANEL
     #define NEWPANEL
-  #endif
-
-  #if ENABLED(MINIPANEL)
-    #define DOGLCD
-    #define ULTIPANEL
-    #define NEWPANEL
-    #define DEFAULT_LCD_CONTRAST 17
   #endif
 
   /**
@@ -251,17 +244,10 @@
   /**
    * Default LCD contrast for dogm-like LCD displays
    */
-  #if ENABLED(DOGLCD) && DISABLED(DEFAULT_LCD_CONTRAST)
-    #define DEFAULT_LCD_CONTRAST 32
-  #endif
-
   #if ENABLED(DOGLCD)
-    #define HAS_LCD_CONTRAST
-    #if ENABLED(U8GLIB_ST7920)
-      #undef HAS_LCD_CONTRAST
-    #endif
-    #if ENABLED(U8GLIB_SSD1306)
-      #undef HAS_LCD_CONTRAST
+    #define HAS_LCD_CONTRAST (DISABLED(U8GLIB_ST7920) && DISABLED(U8GLIB_SSD1306) && DISABLED(U8GLIB_SH1106))
+    #if HAS_LCD_CONTRAST && !defined(DEFAULT_LCD_CONTRAST)
+      #define DEFAULT_LCD_CONTRAST 32
     #endif
   #endif
 
@@ -315,11 +301,17 @@
    * CoreXY and CoreXZ
    */
   #if ENABLED(COREXY)
+    #define CORE_AXIS_1 A_AXIS // XY from A + B
     #define CORE_AXIS_2 B_AXIS
-    #define CORE_AXIS_3 Z_AXIS
+    #define NORMAL_AXIS Z_AXIS
   #elif ENABLED(COREXZ)
+    #define CORE_AXIS_1 A_AXIS // XZ from A + C
     #define CORE_AXIS_2 C_AXIS
-    #define CORE_AXIS_3 Y_AXIS
+    #define NORMAL_AXIS Y_AXIS
+  #elif ENABLED(COREYZ)
+    #define CORE_AXIS_1 B_AXIS // YZ from B + C
+    #define CORE_AXIS_2 C_AXIS
+    #define NORMAL_AXIS X_AXIS
   #endif
 
   /**

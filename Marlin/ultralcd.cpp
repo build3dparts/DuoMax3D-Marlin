@@ -97,7 +97,7 @@ static void lcd_status_screen();
   static void lcd_control_motion_menu();
   static void lcd_control_volumetric_menu();
 
-  #if ENABLED(HAS_LCD_CONTRAST)
+  #if HAS_LCD_CONTRAST
     static void lcd_set_contrast();
   #endif
 
@@ -470,14 +470,21 @@ inline void line_to_current(AxisEnum axis) {
 
 #if ENABLED(SDSUPPORT)
 
-  static void lcd_sdcard_pause() { card.pauseSDPrint(); }
+  static void lcd_sdcard_pause() {
+    card.pauseSDPrint();
+    print_job_timer.pause();
+  }
 
-  static void lcd_sdcard_resume() { card.startFileprint(); }
+  static void lcd_sdcard_resume() {
+    card.startFileprint();
+    print_job_timer.start();
+  }
 
   static void lcd_sdcard_stop() {
     stepper.quick_stop();
     card.sdprinting = false;
     card.closefile();
+    print_job_timer.stop();
     thermalManager.autotempShutdown();
     cancel_heatup = true;
     lcd_setstatus(MSG_PRINT_ABORTED, true);
@@ -1345,7 +1352,7 @@ static void lcd_control_menu() {
   MENU_ITEM(submenu, MSG_MOTION, lcd_control_motion_menu);
   MENU_ITEM(submenu, MSG_VOLUMETRIC, lcd_control_volumetric_menu);
 
-  #if ENABLED(HAS_LCD_CONTRAST)
+  #if HAS_LCD_CONTRAST
     //MENU_ITEM_EDIT(int3, MSG_CONTRAST, &lcd_contrast, 0, 63);
     MENU_ITEM(submenu, MSG_CONTRAST, lcd_set_contrast);
   #endif
@@ -1369,7 +1376,7 @@ static void lcd_control_menu() {
 #if ENABLED(PID_AUTOTUNE_MENU)
 
   #if ENABLED(PIDTEMP)
-    int autotune_temp[EXTRUDERS] = { 150 };
+    int autotune_temp[EXTRUDERS] = ARRAY_BY_EXTRUDERS1(150);
     const int heater_maxtemp[EXTRUDERS] = ARRAY_BY_EXTRUDERS(HEATER_0_MAXTEMP, HEATER_1_MAXTEMP, HEATER_2_MAXTEMP, HEATER_3_MAXTEMP);
   #endif
 
@@ -1705,7 +1712,7 @@ static void lcd_control_volumetric_menu() {
  * "Control" > "Contrast" submenu
  *
  */
-#if ENABLED(HAS_LCD_CONTRAST)
+#if HAS_LCD_CONTRAST
   static void lcd_set_contrast() {
     ENCODER_DIRECTION_NORMAL();
     if (encoderPosition) {
@@ -2376,7 +2383,7 @@ void lcd_setalertstatuspgm(const char* message) {
 
 void lcd_reset_alert_level() { lcd_status_message_level = 0; }
 
-#if ENABLED(HAS_LCD_CONTRAST)
+#if HAS_LCD_CONTRAST
   void lcd_setcontrast(uint8_t value) {
     lcd_contrast = value & 0x3F;
     u8g.setContrast(lcd_contrast);
