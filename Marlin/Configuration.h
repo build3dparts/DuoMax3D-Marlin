@@ -249,9 +249,9 @@
   #define PID_INTEGRAL_DRIVE_MAX PID_MAX  //limit for the integral term
   #define K1 0.95 //smoothing factor within the PID
 
-#define  DEFAULT_Kp 27.84
-#define  DEFAULT_Ki 2.21
-#define  DEFAULT_Kd 87.57
+#define  DEFAULT_Kp 34.92
+#define  DEFAULT_Ki 3.52
+#define  DEFAULT_Kd 86.68
 
   // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
   // Ultimaker
@@ -299,9 +299,9 @@
 
   #define PID_BED_INTEGRAL_DRIVE_MAX MAX_BED_POWER //limit for the integral term
 
-#define  DEFAULT_bedKp 364.97
-#define  DEFAULT_bedKi 39.05
-#define  DEFAULT_bedKd 852.70
+#define  DEFAULT_bedKp 476.16
+#define  DEFAULT_bedKi 56.99
+#define  DEFAULT_bedKd 994.65
 
 //#define  DEFAULT_bedKp 376.62
 //#define  DEFAULT_bedKi 43.53
