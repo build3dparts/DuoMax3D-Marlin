@@ -40,6 +40,8 @@
   void lcd_setalertstatuspgm(const char* message);
   void lcd_reset_alert_level();
   bool lcd_detected(void);
+  void lcd_kill_screen();
+  void kill_screen(const char* lcd_msg);
 
   #if ENABLED(LCD_USE_I2C_BUZZER)
     void lcd_buzz(long duration, uint16_t freq);
@@ -69,18 +71,31 @@
     void lcd_quick_feedback(); // Audible feedback for a button click - could also be visual
     bool lcd_clicked();
     void lcd_ignore_click(bool b=true);
+
+    #if ENABLED(FILAMENT_CHANGE_FEATURE)
+      enum FilamentChangeMessage {
+        FILAMENT_CHANGE_MESSAGE_INIT,
+        FILAMENT_CHANGE_MESSAGE_UNLOAD,
+        FILAMENT_CHANGE_MESSAGE_INSERT,
+        FILAMENT_CHANGE_MESSAGE_LOAD,
+        FILAMENT_CHANGE_MESSAGE_EXTRUDE,
+        FILAMENT_CHANGE_MESSAGE_OPTION,
+        FILAMENT_CHANGE_MESSAGE_RESUME,
+        FILAMENT_CHANGE_MESSAGE_STATUS
+      };
+      void lcd_filament_change_show_message(FilamentChangeMessage message);
+    #endif // FILAMENT_CHANGE_FEATURE
+
   #else
     FORCE_INLINE void lcd_buttons_update() {}
   #endif
 
-  extern int plaPreheatHotendTemp;
-  extern int plaPreheatHPBTemp;
-  extern int plaPreheatFanSpeed;
-  extern int absPreheatHotendTemp;
-  extern int absPreheatHPBTemp;
-  extern int absPreheatFanSpeed;
-
-  extern bool cancel_heatup;
+  extern int preheatHotendTemp1;
+  extern int preheatBedTemp1;
+  extern int preheatFanSpeed1;
+  extern int preheatHotendTemp2;
+  extern int preheatBedTemp2;
+  extern int preheatFanSpeed2;
 
   #if ENABLED(FILAMENT_LCD_DISPLAY)
     extern millis_t previous_lcd_status_ms;
